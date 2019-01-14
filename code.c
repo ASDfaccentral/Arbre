@@ -440,7 +440,41 @@ void printArray(int ints[], int len)
   printf("\n"); 
 }     
   
-
+/************************************************/
+tree * kemepluspetit (tree *T, int k)
+{
+  
+  pile *p;
+  tree *ABR;
+  
+  ABR =T;
+  
+  Init_stack(&p);
+  
+  while  (ABR!=NULL)
+  {
+     push (&p, ABR); 
+     ABR=ABR->left;
+  }
+  
+  while  (!PisEmpty(p))
+  {
+      ABR = pop (&p);
+      k--;
+      if (k== 0) return (ABR);
+                else { if (!IsEmpty(ABR->right)) {ABR=ABR->right; 
+                                                  while  (ABR!=NULL)
+                                                     {
+                                                        push (&p, ABR); 
+                                                        ABR=ABR->left;
+                                                      }
+                                                   }
+                    
+                      }
+       }
+  
+  return (NULL);
+}
 
 
 
@@ -471,7 +505,7 @@ printf("\n 8: Rechercher un élément dans un arbre binaire ");
 printf("\n 9: Trouver la hauteur d’un arbre binaire(itérative) ");
 printf("\n 10: Afficher tous les chemins de la racine aux feuilles");
 printf("\n 11: Convertir un arbre à son miroir.");
-printf("\n 12: ");
+printf("\n 12: Trouver le kéme élement le plus petit dans un ABR");
 printf("\n 13: Vérifier si un arbre est un arbre binaire de recherche");
 printf("\n 14: Sortir");
 printf("\n\n Entez votre choix : ");
@@ -501,7 +535,7 @@ break;
 case 11: R=Miroir(T); printf("Le miroir de votre arbre est le suivant :"); afficher(R);
 break;
 
-case 12: 
+case 12: R= kemepluspetit(T,5);  printf("le keme élément plus petit est : %u \n",R->info);
 break;
 case 13: check=ABR_check(T); if (check==true) printf ("C'est bien un arbre binaire de recherche"); else printf ("Ce n'ai pas un arbre binaire de recherche");
 break;
