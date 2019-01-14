@@ -1,10 +1,4 @@
-/******************************************************************************
 
-                            Online C Compiler.
-                Code, Compile, Run and Debug C program online.
-Write your code in this editor and press "Run" button to compile and execute it.
-
-*******************************************************************************/
 
 #include<stdio.h>
 #include <time.h>
@@ -260,8 +254,9 @@ tree * Rand_Tree(int i)
 void afficher (tree *T)
 {
     if (!IsEmpty (T)) { printf ("%d  ", T->info );
-                        afficher(T->right);
                         afficher(T->left);
+                        afficher(T->right);
+                        
                               }
 }
 
@@ -487,8 +482,9 @@ int main()
     tree *T, *R;
     int option;
     bool check;
+    int k;
     
-    T= Rand_Tree(5);
+    T= Rand_Tree(3);
     afficher (T);
 clrscr();
 do
@@ -535,7 +531,7 @@ break;
 case 11: R=Miroir(T); printf("Le miroir de votre arbre est le suivant :"); afficher(R);
 break;
 
-case 12: R= kemepluspetit(T,5);  printf("le keme élément plus petit est : %u \n",R->info);
+case 12: printf ("Donnez k : "); scanf("%d",&k); R= kemepluspetit(T,k);  if (R!= NULL)printf("le %d eme élément plus petit est : %u \n",k, R->info);else printf ("k n'existe pas");
 break;
 case 13: check=ABR_check(T); if (check==true) printf ("C'est bien un arbre binaire de recherche"); else printf ("Ce n'ai pas un arbre binaire de recherche");
 break;
