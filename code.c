@@ -1,3 +1,10 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
 
 #include<stdio.h>
 #include <time.h>
@@ -25,11 +32,9 @@ typedef struct sNode
 }pile; 
 
 /******************************************************************************
-
                             Fonctions de bases sur pile pour entier
                             Cette déclaration est prise du Site 
                                 Geeks for geeks 
-
 *******************************************************************************/
 // A structure to represent a stack 
 struct IStack 
@@ -80,9 +85,7 @@ int Ipop(struct IStack* stack)
 
 
 /******************************************************************************
-
                             Fonctions de bases sur pile pour arbre 
-
 *******************************************************************************/
 
 /* initialiser la pile */ 
@@ -149,9 +152,7 @@ tree *pop(pile ** Sommet)
 } 
  
 /******************************************************************************
-
                             Fonctions de bases sur arbre
-
 *******************************************************************************/
 
 
@@ -199,9 +200,7 @@ return (! IsLeave(T) );
 
 
 /******************************************************************************
-
                             Fonctions serie du TD.
-
 *******************************************************************************/
 
 unsigned max(unsigned a,unsigned b)
@@ -392,6 +391,61 @@ tree * Maximal ( tree *T)
 
 
 
+/**************************************/
+
+
+
+void printPathsRecur(tree * T, int path[], int pathLen); 
+void printArray(int ints[], int len); 
+  
+
+void printPaths(tree * T)  
+{ 
+  int path[1000]; 
+  printPathsRecur(T, path, 0); 
+} 
+  
+
+void printPathsRecur(tree * T, int path[], int pathLen)  
+{ 
+  if (T==NULL)  
+    return; 
+  
+  /* ajouter un noeud au tableau */
+  path[pathLen] = T->info; 
+  pathLen++; 
+  
+  /* Si c'est une feuille alors imprimé le chemin  */
+  if (Left(T)==NULL && Right(T)==NULL)  
+  { 
+    printArray(path, pathLen); 
+  } 
+  else 
+  { 
+    /* Parcourir fils gauche et fils droit */
+    printPathsRecur(Left(T), path, pathLen); 
+    printPathsRecur(Right(T), path, pathLen); 
+  } 
+} 
+  
+  
+
+void printArray(int ints[], int len)  
+{ 
+  int i; 
+  for (i=0; i<len; i++)  
+  { 
+    printf("%d ", ints[i]); 
+  } 
+  printf("\n"); 
+}     
+  
+
+
+
+
+
+
 
 int main()
 {
@@ -415,7 +469,7 @@ printf("\n 6: Supprime un arbre binaire.");
 printf("\n 7: Trouver l'élément max dans un arbre binaire ");
 printf("\n 8: Rechercher un élément dans un arbre binaire ");
 printf("\n 9: Trouver la hauteur d’un arbre binaire(itérative) ");
-printf("\n 10: ");
+printf("\n 10: Afficher tous les chemins de la racine aux feuilles");
 printf("\n 11: Convertir un arbre à son miroir.");
 printf("\n 12: ");
 printf("\n 13: Vérifier si un arbre est un arbre binaire de recherche");
@@ -442,7 +496,7 @@ case 8: R= Rechercher(T,30); if (IsEmpty(R)) printf("N'existe pas"); else printf
 break;
 case 9: printf("L'hauteur de l'arbre est de : %u \n",Height_iter(T));
 break;
-case 10: 
+case 10:  printPaths (T);
 break;
 case 11: R=Miroir(T); printf("Le miroir de votre arbre est le suivant :"); afficher(R);
 break;
