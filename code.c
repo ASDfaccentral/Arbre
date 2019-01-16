@@ -1,5 +1,3 @@
-
-
 #include<stdio.h>
 #include <time.h>
 #include <stdlib.h>
@@ -295,6 +293,15 @@ tree * Miroir (tree *T)
                 else return (NULL);     
 }
 
+tree * MAXABR (tree *t)
+{  if ((t->right == NULL) ||  (t->right == NULL)) return (t);
+    else MAXABR(t->right);
+}
+
+tree * MINABR (tree *t)
+{  if ((t->left == NULL) ||  (t->left == NULL)) return (t);
+    else MINABR(t->left);
+}
 
 bool ABR_check(tree * T)
 {   bool FG,FD;
@@ -303,9 +310,9 @@ bool ABR_check(tree * T)
                        FD = ABR_check(Right(T));
                        if ((FG==false) || (FD==false)) return (false);
                                                 else if ((IsEmpty(Left(T)))&& (IsEmpty(Right(T)))) return (true);
-                                                          else {if (IsEmpty(Left(T))) {if (Right(T)->info < T->info) return (false); else return (true);}
-                                                                if (IsEmpty(Right(T))) {if (Left(T)->info > T->info) return (false); else return (true);}
-                                                                if ((Left(T)->info < T->info) && (Right(T)->info > T->info)) return (true); else return (false);
+                                                          else {if (IsEmpty(Left(T))) {if (MINABR(Right(T))->info < T->info) return (false); else return (true);}
+                                                                if (IsEmpty(Right(T))) {if (MAXABR(Left(T))->info > T->info) return (false); else return (true);}
+                                                                if ((MAXABR(Left(T))->info < T->info) && (MINABR(Right(T))->info > T->info)) return (true); else return (false);
                                                                 } 
                       } 
 }
