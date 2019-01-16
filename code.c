@@ -239,14 +239,29 @@ tree * Rand_Tree(int i)
    // time_t t;
     
    // srand((unsigned) time(&t));  // Initialization, should only be called once.
-    if (i==0) return NULL;
+   /* if (i==0) return NULL;
          else { T=(tree *)malloc (sizeof(tree));
                 //if (i%2==0) {T->info= rand()%20; T->left=NULL; T->right=Rand_Tree(i-1);}
                     // else {
                     T->info= rand()%20; T->left=NULL; T->right=Rand_Tree(i-1); T->left=Rand_Tree(i-1);//}
                       return (T);
-                  }
+                  }*/
+    T=(tree *)malloc (sizeof(tree));
+    T->info =10;
+    T->left=(tree *)malloc (sizeof(tree));
+    T->left->info =5;
+    T->left->left=(tree *)malloc (sizeof(tree));
+    T->left->left->info =4;T->left->left->left=NULL; T->left->left->right=NULL;
+    T->left->right=(tree *)malloc (sizeof(tree));
+    T->left->right->info =6;T->left->right->left=NULL; T->left->right->right=NULL;
     
+    T->right=(tree *)malloc (sizeof(tree));
+    T->right->info =15;
+    T->right->left=(tree *)malloc (sizeof(tree));
+    T->right->left->info =14;T->right->left->left=NULL; T->right->left->right=NULL;
+    T->right->right=(tree *)malloc (sizeof(tree));
+    T->right->right->info =16;T->right->right->left=NULL; T->right->right->right=NULL;
+    return (T);
 }
 
 void afficher (tree *T)
@@ -316,6 +331,22 @@ bool ABR_check(tree * T)
                                                                 } 
                       } 
 }
+
+bool ABR_check2(tree * T, int *Min, int *Max)
+{   bool FG,FD;
+    int MaxFG, MinFG, MaxFD, MinFD;
+    if (IsEmpty(T)) return (true);
+                else { FG= ABR_check2(Left(T),&MinFG,&MaxFG);
+                       FD = ABR_check2(Right(T),&MinFD,&MaxFD);
+                       if ((FG==false) || (FD==false)) return (false);
+                                                else if ((IsEmpty(Left(T)))&& (IsEmpty(Right(T)))) {(*Min)=T->info;(*Max)=T->info;return (true);}
+                                                          else {if (IsEmpty(Left(T))) {if (MinFD < T->info) return (false); else {(*Min)=MinFD;(*Max)=T->info;return (true);}}
+                                                                if (IsEmpty(Right(T))) {if (MaxFG > T->info) return (false); else {(*Min)=T->info;(*Max)=MinFD;return (true);}}
+                                                                if ((MaxFG < T->info) && (MinFD > T->info)) {(*Min)=MinFG;(*Max)=MaxFD;return (true);} else return (false);
+                                                                } 
+                      } 
+}
+
 
 
 unsigned Taille_iter (tree *T)
@@ -490,7 +521,7 @@ int main()
     int option;
     bool check;
     int k;
-    
+    int min,max;
     T= Rand_Tree(3);
     afficher (T);
 clrscr();
@@ -509,8 +540,9 @@ printf("\n 9: Trouver la hauteur d’un arbre binaire(itérative) ");
 printf("\n 10: Afficher tous les chemins de la racine aux feuilles");
 printf("\n 11: Convertir un arbre à son miroir.");
 printf("\n 12: Trouver le kéme élement le plus petit dans un ABR");
-printf("\n 13: Vérifier si un arbre est un arbre binaire de recherche");
-printf("\n 14: Sortir");
+printf("\n 13: Vérifier si un arbre est un arbre binaire de recherche Sol 1");
+printf("\n 14: Vérifier si un arbre est un arbre binaire de recherche Sol 2");
+printf("\n 15: Sortir");
 printf("\n\n Entez votre choix : ");
 scanf("%d", &option);
 switch(option)
@@ -542,8 +574,10 @@ case 12: printf ("Donnez k : "); scanf("%d",&k); R= kemepluspetit(T,k);  if (R!=
 break;
 case 13: check=ABR_check(T); if (check==true) printf ("C'est bien un arbre binaire de recherche"); else printf ("Ce n'ai pas un arbre binaire de recherche");
 break;
+case 14: check=ABR_check2(T,&max,&min); if (check==true) printf ("C'est bien un arbre binaire de recherche"); else printf ("Ce n'ai pas un arbre binaire de recherche");
+break;
 }
-}while(option != 14);
+}while(option != 15);
 getch();
     return 0;
 }
